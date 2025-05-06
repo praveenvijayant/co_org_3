@@ -8,8 +8,7 @@ plugins {
 android {
     namespace = "com.example.railway_caution_viewer"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
-ndkVersion "27.0.12077973"
+    ndkVersion = "27.0.12077973" // ✅ Fixed Kotlin syntax for NDK
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -21,10 +20,7 @@ ndkVersion "27.0.12077973"
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.example.railway_caution_viewer"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
@@ -33,8 +29,7 @@ ndkVersion "27.0.12077973"
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
+            // Use debug signingConfig just for testing — replace for production!
             signingConfig = signingConfigs.getByName("debug")
         }
     }
