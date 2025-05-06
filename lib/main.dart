@@ -65,7 +65,8 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
   }
 
   Future<void> _loadCautionData() async {
-    final jsonString = await rootBundle.loadString('assets/caution_orders.json');
+    final jsonString =
+        await rootBundle.loadString('assets/caution_orders.json');
     final data = json.decode(jsonString);
     setState(() {
       _cautions = data;
@@ -77,19 +78,23 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
     final jsonData = json.decode(geojson);
     final coordinates = jsonData['features'][0]['geometry']['coordinates'];
     setState(() {
-      _railwayLine = coordinates.map<LatLng>((c) => LatLng(c[1], c[0])).toList();
+      _railwayLine =
+          coordinates.map<LatLng>((c) => LatLng(c[1], c[0])).toList();
     });
   }
 
   void _updateNearbyCaution() {
-    if (_currentPosition == null || _cautions.isEmpty || _railwayLine.isEmpty) return;
+    if (_currentPosition == null ||
+        _cautions.isEmpty ||
+        _railwayLine.isEmpty) return;
 
     for (final caution in _cautions) {
       final lat = _railwayLine.first.latitude;
       final lon = _railwayLine.first.longitude;
       final cautionPoint = LatLng(lat, lon);
 
-      final dist = distance.as(LengthUnit.Kilometer, _currentPosition!, cautionPoint);
+      final dist =
+          distance.as(LengthUnit.Kilometer, _currentPosition!, cautionPoint);
 
       if (dist < 2.0) {
         setState(() {
@@ -117,16 +122,29 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  InfoTile(title: 'Current Speed', value: _currentPosition != null ? 'Live' : 'Waiting...'),
-                  InfoTile(title: 'Current Location', value: _currentPosition?.toString() ?? 'Detecting...'),
+                  InfoTile(
+                      title: 'Current Speed',
+                      value: _currentPosition != null ? 'Live' : 'Waiting...'),
+                  InfoTile(
+                      title: 'Current Location',
+                      value: _currentPosition?.toString() ?? 'Detecting...'),
                   if (_nearbyCaution != null)
-                    InfoTile(title: 'Upcoming Caution', value: _nearbyCaution!['start_km'] + ' → ' + _nearbyCaution!['end_km']),
+                    InfoTile(
+                        title: 'Upcoming Caution',
+                        value: _nearbyCaution!['start_km'] +
+                            ' → ' +
+                            _nearbyCaution!['end_km']),
                   if (_nearbyCaution != null)
-                    InfoTile(title: 'Speed Limit', value: _nearbyCaution!['speed_limit'] + ' km/h'),
+                    InfoTile(
+                        title: 'Speed Limit',
+                        value: _nearbyCaution!['speed_limit'] + ' km/h'),
                   if (_nearbyCaution != null)
-                    InfoTile(title: 'Reason', value: _nearbyCaution!['reason']),
+                    InfoTile(
+                        title: 'Reason', value: _nearbyCaution!['reason']),
                   if (_nearbyCaution == null)
-                    const InfoTile(title: 'Upcoming Caution', value: 'None within 2 km'),
+                    const InfoTile(
+                        title: 'Upcoming Caution',
+                        value: 'None within 2 km'),
                 ],
               ),
             ),
@@ -140,8 +158,10 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
                 ),
                 children: [
                   TileLayer(
-                    urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    userAgentPackageName: 'com.example.railway_caution_viewer',
+                    urlTemplate:
+                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    userAgentPackageName:
+                        'com.example.railway_caution_viewer',
                   ),
                   if (_railwayLine.isNotEmpty)
                     PolylineLayer(polylines: [
@@ -157,7 +177,7 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
                         point: _currentPosition!,
                         width: 20,
                         height: 20,
-                        builder: (ctx) => const Icon(Icons.train, color: Colors.blue),
+                        child: const Icon(Icons.train, color: Colors.blue),
                       ),
                     ])
                 ],
@@ -178,13 +198,19 @@ class InfoTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+      padding:
+          const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: const TextStyle(color: Colors.grey, fontSize: 14)),
+          Text(title,
+              style: const TextStyle(color: Colors.grey, fontSize: 14)),
           const SizedBox(height: 2),
-          Text(value, style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+          Text(value,
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold)),
         ],
       ),
     );
