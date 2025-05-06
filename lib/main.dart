@@ -76,15 +76,26 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
     });
   }
 
-  Future<void> _loadRailwayLine() async {
-    final geojson = await rootBundle.loadString('assets/railway_line.geojson');
-    final jsonData = json.decode(geojson);
-    final coordinates = jsonData['features'][0]['geometry']['coordinates'];
-    setState(() {
-      _railwayLine =
-          coordinates.map<LatLng>((c) => LatLng(c[1], c[0])).toList();
-    });
+ Future<void> _loadRailwayLine() async {
+  final geojson = await rootBundle.loadString('assets/railway_line.geojson');
+  final jsonData = json.decode(geojson);
+
+  List<LatLng> combinedLine = [];
+
+  for (var feature in jsonData['features']) {
+    if (feature['geometry']['type'] == 'LineString') {
+      final coordinates = feature['geometry']['coordinates'];
+      combinedLine.addAll(
+        coordinates.map<LatLng>((c) => LatLng(c[1], c[0])),
+      );
+    }
   }
+
+  setState(() {
+    _railwayLine = combinedLine;
+  });
+}
+
 
   void _updateNearbyCaution() {
     if (_currentPosition == null ||
