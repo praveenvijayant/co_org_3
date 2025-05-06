@@ -216,3 +216,4 @@ class InfoTile extends StatelessWidget {
     );
   }
 }
+
