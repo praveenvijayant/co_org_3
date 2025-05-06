@@ -1,0 +1,20 @@
+name: railway_caution_viewer
+description: A Flutter app for viewing live railway cautions with GPS and map.
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.7.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_map: ^6.2.1
+  geolocator: ^14.0.0
+  latlong2: ^0.9.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/railway_line.geojson
+    - assets/caution_orders.json
