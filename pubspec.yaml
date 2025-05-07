@@ -18,3 +18,5 @@ flutter:
   assets:
     - assets/railway_line.geojson
     - assets/caution_orders.json
+    - assets/caution_orders_1.json
+    - assets/caution_orders_2.json
