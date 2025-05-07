@@ -1,0 +1,14 @@
+[
+  {
+    "start_km": "12.00",
+    "end_km": "12.80",
+    "speed_limit": "40",
+    "reason": "Signal failure"
+  },
+  {
+    "start_km": "15.30",
+    "end_km": "16.00",
+    "speed_limit": "50",
+    "reason": "OHE maintenance"
+  }
+]

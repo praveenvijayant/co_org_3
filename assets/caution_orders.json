@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "start_km": "3.50",
+    "end_km": "4.20",
+    "speed_limit": "60",
+    "reason": "Track maintenance"
+  },
+  {
+    "start_km": "7.75",
+    "end_km": "8.10",
+    "speed_limit": "45",
+    "reason": "Bridge under repair"
+  }
+]
