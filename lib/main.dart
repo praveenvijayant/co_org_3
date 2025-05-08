@@ -1,4 +1,4 @@
-// main.dart (Enhanced with Caution Zones, Zoom, Save/Load)
+// main.dart (with merged Chennai–Arakkonam GeoJSON support)
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -62,13 +62,12 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
   }
 
   Future<void> _loadRailwayLine() async {
-    final geojson = await rootBundle.loadString('assets/railway_line.geojson');
+    final geojson = await rootBundle.loadString('assets/railway_line_merged.geojson');
     final jsonData = json.decode(geojson);
     if (jsonData['features'].isNotEmpty) {
       final coordinates = jsonData['features'][0]['geometry']['coordinates'];
       setState(() {
-        _railwayLine =
-            coordinates.map<LatLng>((c) => LatLng(c[1], c[0])).toList();
+        _railwayLine = coordinates.map<LatLng>((c) => LatLng(c[1], c[0])).toList();
       });
     }
   }
