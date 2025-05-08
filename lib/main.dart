@@ -170,7 +170,7 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
                       width: 60,
                       height: 60,
                       point: _currentPosition!,
-                      builder: (ctx) => const Icon(
+                      child: const Icon(
                         Icons.location_pin,
                         color: Colors.red,
                         size: 40,
