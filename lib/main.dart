@@ -74,7 +74,7 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
       appBar: AppBar(title: const Text('Railway Caution Viewer')),
       body: FlutterMap(
         options: MapOptions(
-          center: _currentPosition ?? LatLng(13.0827, 80.2707), // Default: Chennai Central
+          center: _currentPosition ?? LatLng(13.0827, 80.2707), // Chennai Central
           zoom: 10.0,
         ),
         children: [
@@ -99,7 +99,7 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
                   point: _currentPosition!,
                   width: 60,
                   height: 60,
-                  builder: (ctx) => const Icon(Icons.location_pin, color: Colors.red, size: 30),
+                  child: const Icon(Icons.location_pin, color: Colors.red, size: 30),
                 ),
               ],
             ),
