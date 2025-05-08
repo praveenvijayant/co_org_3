@@ -32,11 +32,13 @@ class CautionViewerScreen extends StatefulWidget {
 
 class _CautionViewerScreenState extends State<CautionViewerScreen> {
   LatLng? _currentPosition;
-  List<LatLng> _railwayLine = [];
+  List<Polyline> _railwayPolylines = [];
+  List<LatLng> _allPoints = [];
   List<double> _railwayKms = [];
   List<Map<String, dynamic>> _manualCautions = [];
   final MapController _mapController = MapController();
   final Distance _distance = const Distance();
+  double _totalMappedKm = 0.0;
 
   @override
   void initState() {
@@ -65,42 +67,50 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
   Future<void> _loadRailwayLine() async {
     final geojson = await rootBundle.loadString('assets/railway_line.geojson');
     final jsonData = json.decode(geojson);
-    final List<LatLng> points = [];
+    final List<Polyline> polylines = [];
+    final List<LatLng> combinedPoints = [];
 
     for (var feature in jsonData['features']) {
       if (feature['geometry']['type'] == 'LineString') {
         final coordinates = feature['geometry']['coordinates'];
-        points.addAll(
-            coordinates.map<LatLng>((c) => LatLng(c[1], c[0])).toList());
+        final segment = coordinates.map<LatLng>((c) => LatLng(c[1], c[0])).toList();
+        combinedPoints.addAll(segment);
+        polylines.add(Polyline(points: segment, strokeWidth: 4.0, color: Colors.blue));
       }
     }
 
-    // Cumulative KMs from Chennai Central
     final List<double> kms = [0.0];
-    for (int i = 1; i < points.length; i++) {
-      final prev = points[i - 1];
-      final curr = points[i];
+    for (int i = 1; i < combinedPoints.length; i++) {
+      final prev = combinedPoints[i - 1];
+      final curr = combinedPoints[i];
       kms.add(kms.last + _distance(prev, curr) / 1000.0);
     }
 
     setState(() {
-      _railwayLine = points;
+      _railwayPolylines = polylines;
+      _allPoints = combinedPoints;
       _railwayKms = kms;
+      _totalMappedKm = kms.last;
     });
   }
 
   void _addCaution() {
     showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          final _formKey = GlobalKey<FormState>();
-          final _startController = TextEditingController();
-          final _endController = TextEditingController();
-          final _speedController = TextEditingController();
-          final _reasonController = TextEditingController();
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        final _formKey = GlobalKey<FormState>();
+        final _startController = TextEditingController();
+        final _endController = TextEditingController();
+        final _speedController = TextEditingController();
+        final _reasonController = TextEditingController();
 
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+            left: 16, right: 16, top: 16,
+          ),
+          child: SingleChildScrollView(
             child: Form(
               key: _formKey,
               child: Column(
@@ -145,15 +155,39 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
                 ],
               ),
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
+  }
+
+  void _onCautionTap(Map<String, dynamic> caution) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Caution Details"),
+        content: Text(
+          'Start KM: ${caution['startKm']}\n'
+          'End KM: ${caution['endKm']}\n'
+          'Speed Limit: ${caution['speed']} kmph\n'
+          'Reason: ${caution['reason']}\n'
+          'Positioned at ~${caution['startKm']} KM from origin'
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Close'),
+          )
+        ],
+      ),
+    );
   }
 
   void _onMapTap(LatLng tapPoint) {
     double minDist = double.infinity;
     int closestIndex = 0;
-    for (int i = 0; i < _railwayLine.length; i++) {
-      final d = _distance(_railwayLine[i], tapPoint);
+    for (int i = 0; i < _allPoints.length; i++) {
+      final d = _distance(_allPoints[i], tapPoint);
       if (d < minDist) {
         minDist = d;
         closestIndex = i;
@@ -179,7 +213,16 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Railway Caution Viewer')),
+      appBar: AppBar(
+        title: const Text('Railway Caution Viewer'),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(20),
+          child: Text(
+            'Mapped Distance: ~${_totalMappedKm.toStringAsFixed(2)} KM',
+            style: const TextStyle(color: Colors.white70, fontSize: 12),
+          ),
+        ),
+      ),
       body: FlutterMap(
         mapController: _mapController,
         options: MapOptions(
@@ -193,13 +236,7 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
             subdomains: ['a', 'b', 'c'],
           ),
           PolylineLayer(
-            polylines: [
-              Polyline(
-                points: _railwayLine,
-                strokeWidth: 4.0,
-                color: Colors.blue,
-              )
-            ],
+            polylines: _railwayPolylines,
           ),
           MarkerLayer(
             markers: [
@@ -228,10 +265,9 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
                 return Marker(
                   width: 40,
                   height: 40,
-                  point: _railwayLine[closestIndex],
-                  child: Tooltip(
-                    message:
-                        "KM ${c['startKm']} - ${c['endKm']}, ${c['speed']} kmph: ${c['reason']}",
+                  point: _allPoints[closestIndex],
+                  child: GestureDetector(
+                    onTap: () => _onCautionTap(c),
                     child: const Icon(
                       Icons.warning,
                       color: Colors.orange,
