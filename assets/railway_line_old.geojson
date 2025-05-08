@@ -1,10 +1,21 @@
 {
   "type": "FeatureCollection",
+  "generator": "overpass-turbo",
+  "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+  "timestamp": "2025-05-08T16:48:36Z",
   "features": [
     {
       "type": "Feature",
       "properties": {
-        "name": "Chennai to Arakkonam Main Line"
+        "@id": "way/22976476",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "name": "Howrah - Chennai Main Line",
+        "name:ur": "ہاوڑہ - چنئی مین لائن",
+        "railway": "rail",
+        "usage": "main",
+        "voltage": "25000"
       },
       "geometry": {
         "type": "LineString",
@@ -40,7 +51,25 @@
           [
             80.2745887,
             13.0892673
-          ],
+          ]
+        ]
+      },
+      "id": "way/22976476"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/23297084",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "railway": "rail",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             80.2924282,
             13.0935576
@@ -164,7 +193,22 @@
           [
             80.2806557,
             13.0804194
-          ],
+          ]
+        ]
+      },
+      "id": "way/23297084"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/24256741",
+        "name": "Chennai Port Trust",
+        "railway": "rail",
+        "service": "siding"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             80.2931941,
             13.0953002
@@ -348,7 +392,28 @@
           [
             80.2882005,
             13.0731346
-          ],
+          ]
+        ]
+      },
+      "id": "way/24256741"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/27618290",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "name": "Howrah - Chennai Main Line",
+        "name:ur": "ہاوڑہ - چنئی مین لائن",
+        "railway": "rail",
+        "railway:etcs": "1",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             80.2746359,
             13.089353
@@ -376,7 +441,26 @@
           [
             80.275694,
             13.0827764
-          ],
+          ]
+        ]
+      },
+      "id": "way/27618290"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/27618291",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "railway": "rail",
+        "railway:etcs": "1",
+        "service": "siding",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             80.2748118,
             13.0885821
@@ -404,7 +488,21 @@
           [
             80.2757226,
             13.0834212
-          ],
+          ]
+        ]
+      },
+      "id": "way/27618291"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/28765015",
+        "railway": "rail",
+        "service": "siding"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             80.2908514,
             13.0802722
@@ -472,7 +570,21 @@
           [
             80.2904165,
             13.084326
-          ],
+          ]
+        ]
+      },
+      "id": "way/28765015"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/28894823",
+        "railway": "rail",
+        "service": "siding"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             80.2880999,
             13.0718926
@@ -712,7 +824,25 @@
           [
             80.302546,
             13.0920114
-          ],
+          ]
+        ]
+      },
+      "id": "way/28894823"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/40985413",
+        "electrified": "no",
+        "gauge": "1000",
+        "name": "Chemin de fer de Dakar au Niger",
+        "operator": "Dakar-Bamako-Ferroviaire",
+        "railway": "rail",
+        "usage": "main"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             -9.4492071,
             13.0336995
@@ -1568,7 +1698,26 @@
           [
             -9.6084378,
             13.1729186
-          ],
+          ]
+        ]
+      },
+      "id": "way/40985413"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/44771342",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "passenger_lines": "1",
+        "railway": "rail",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             74.8113051,
             13.1133414
@@ -1828,7 +1977,27 @@
           [
             74.8032613,
             13.0420789
-          ],
+          ]
+        ]
+      },
+      "id": "way/44771342"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/45249611",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "passenger_lines": "1",
+        "railway": "rail",
+        "source": "landsat",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             77.5073391,
             13.0731611
@@ -2068,7 +2237,26 @@
           [
             77.4720964,
             13.1015161
-          ],
+          ]
+        ]
+      },
+      "id": "way/45249611"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/72098803",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "passenger_lines": "1",
+        "railway": "rail",
+        "source": "landsat",
+        "usage": "branch",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             78.1380719,
             13.1148175
@@ -2764,7 +2952,24 @@
           [
             78.1807967,
             12.9834964
-          ],
+          ]
+        ]
+      },
+      "id": "way/72098803"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/95363870",
+        "electrified": "contact_line",
+        "gauge": "1676",
+        "passenger_lines": "2",
+        "railway": "rail",
+        "usage": "main"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             79.643206,
             13.0792007
@@ -2868,7 +3073,25 @@
           [
             79.6493862,
             13.0876124
-          ],
+          ]
+        ]
+      },
+      "id": "way/95363870"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/102545486",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "railway": "rail",
+        "service": "siding",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             80.27521,
             13.083459
@@ -2896,7 +3119,27 @@
           [
             80.2745963,
             13.0885713
-          ],
+          ]
+        ]
+      },
+      "id": "way/102545486"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/102545509",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "passenger_lines": "2",
+        "railway": "rail",
+        "service": "siding",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             80.2806651,
             13.0803712
@@ -3344,7 +3587,28 @@
           [
             80.2725694,
             13.107103
-          ],
+          ]
+        ]
+      },
+      "id": "way/102545509"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/153743877",
+        "electrified": "no",
+        "gauge": "1000",
+        "name": "ทางรถไฟสายตะวันออก",
+        "name:th": "ทางรถไฟสายตะวันออก",
+        "oneway": "no",
+        "passenger_lines": "2",
+        "railway": "rail",
+        "ref": "ตะวันออก",
+        "usage": "main"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             100.9456691,
             13.1499941
@@ -3420,7 +3684,25 @@
           [
             100.9425125,
             13.0840163
-          ],
+          ]
+        ]
+      },
+      "id": "way/153743877"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/158811645",
+        "electrified": "no",
+        "gauge": "1676",
+        "passenger_lines": "1",
+        "railway": "rail",
+        "source": "landsat",
+        "usage": "main"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             76.1457449,
             13.0175884
@@ -4948,7 +5230,26 @@
           [
             76.2562978,
             13.284887
-          ],
+          ]
+        ]
+      },
+      "id": "way/158811645"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/209558510",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "name": "Beach Chengalpattu Line",
+        "name:ta": "கடற்கரை - செங்கல்பட்டு மார்கம்",
+        "railway": "rail",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             80.2923919,
             13.0935624
@@ -5100,7 +5401,22 @@
           [
             80.2806782,
             13.0804961
-          ],
+          ]
+        ]
+      },
+      "id": "way/209558510"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/217978735",
+        "name": "Chennai Port Trust",
+        "railway": "rail",
+        "service": "siding"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             80.2903518,
             13.0826274
@@ -5164,7 +5480,22 @@
           [
             80.2881697,
             13.0733236
-          ],
+          ]
+        ]
+      },
+      "id": "way/217978735"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/217978742",
+        "name": "Chennai Port Trust",
+        "railway": "rail",
+        "service": "siding"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             80.2905916,
             13.0806285
@@ -5208,7 +5539,22 @@
           [
             80.2903286,
             13.0828778
-          ],
+          ]
+        ]
+      },
+      "id": "way/217978742"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/217978746",
+        "name": "Chennai Port Trust",
+        "railway": "rail",
+        "service": "siding"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             80.2981824,
             13.0891081
@@ -5356,7 +5702,22 @@
           [
             80.2905916,
             13.0806285
-          ],
+          ]
+        ]
+      },
+      "id": "way/217978746"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/217978754",
+        "name": "Chennai Port Trust",
+        "railway": "rail",
+        "service": "siding"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             80.2936188,
             13.0829682
@@ -5380,7 +5741,25 @@
           [
             80.2949679,
             13.0848827
-          ],
+          ]
+        ]
+      },
+      "id": "way/217978754"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/217978818",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "railway": "rail",
+        "service": "siding",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             80.2754043,
             13.0835056
@@ -5408,7 +5787,25 @@
           [
             80.2745963,
             13.0885713
-          ],
+          ]
+        ]
+      },
+      "id": "way/217978818"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/217978833",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "railway": "rail",
+        "service": "siding",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             80.2745069,
             13.0894343
@@ -5440,7 +5837,25 @@
           [
             80.2751684,
             13.0834521
-          ],
+          ]
+        ]
+      },
+      "id": "way/217978833"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/217978834",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "railway": "rail",
+        "service": "siding",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             80.2758876,
             13.0830729
@@ -5472,7 +5887,25 @@
           [
             80.2749756,
             13.0879276
-          ],
+          ]
+        ]
+      },
+      "id": "way/217978834"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/217978836",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "railway": "rail",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             80.2757235,
             13.0827759
@@ -5508,7 +5941,28 @@
           [
             80.2748118,
             13.0885821
-          ],
+          ]
+        ]
+      },
+      "id": "way/217978836"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/245634987",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "operator": "IR",
+        "passenger_lines": "2",
+        "railway": "rail",
+        "railway:preferred_direction": "forward",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             79.6439937,
             13.1226873
@@ -5760,7 +6214,26 @@
           [
             79.6527288,
             13.0801617
-          ],
+          ]
+        ]
+      },
+      "id": "way/245634987"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/278603898",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "passenger_lines": "2",
+        "railway": "rail",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             77.5870878,
             13.070675
@@ -5864,7 +6337,24 @@
           [
             77.5953935,
             13.0961854
-          ],
+          ]
+        ]
+      },
+      "id": "way/278603898"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/369358254",
+        "electrified": "contact_line",
+        "gauge": "1676",
+        "passenger_lines": "2",
+        "railway": "rail",
+        "usage": "main"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             79.6488868,
             13.0863747
@@ -5956,7 +6446,29 @@
           [
             79.6431981,
             13.0791502
-          ],
+          ]
+        ]
+      },
+      "id": "way/369358254"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/427147781",
+        "electrified": "no",
+        "gauge": "1000",
+        "name": "สายใต้",
+        "name:en": "Southern Line",
+        "name:th": "สายใต้",
+        "operator": "การรถไฟแห่งประเทศไทย",
+        "passenger_lines": "1",
+        "railway": "rail",
+        "ref": "ใต้",
+        "usage": "main"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             99.959512,
             13.0419271
@@ -6032,7 +6544,25 @@
           [
             99.9576843,
             13.09849
-          ],
+          ]
+        ]
+      },
+      "id": "way/427147781"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/446828260",
+        "electrified": "no",
+        "frequency": "0",
+        "gauge": "1000",
+        "railway": "rail",
+        "tracks": "1",
+        "usage": "main"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             2.9146733,
             13.0935024
@@ -6436,7 +6966,26 @@
           [
             3.1485701,
             13.0533428
-          ],
+          ]
+        ]
+      },
+      "id": "way/446828260"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/527620999",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "passenger_lines": "2",
+        "railway": "rail",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             79.6736632,
             13.0819081
@@ -6772,7 +7321,26 @@
           [
             79.6439431,
             13.1226758
-          ],
+          ]
+        ]
+      },
+      "id": "way/527620999"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/528217657",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "passenger_lines": "1",
+        "railway": "rail",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             79.1771031,
             13.0512309
@@ -7096,7 +7664,22 @@
           [
             79.1353717,
             13.1346716
-          ],
+          ]
+        ]
+      },
+      "id": "way/528217657"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/555312388",
+        "gauge": "1676",
+        "railway": "rail",
+        "service": "yard"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             79.6677303,
             13.0820323
@@ -7192,7 +7775,22 @@
           [
             79.6610862,
             13.0845909
-          ],
+          ]
+        ]
+      },
+      "id": "way/555312388"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/555312389",
+        "gauge": "1676",
+        "railway": "rail",
+        "service": "yard"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             79.6657682,
             13.0819249
@@ -7260,7 +7858,22 @@
           [
             79.6613194,
             13.0841474
-          ],
+          ]
+        ]
+      },
+      "id": "way/555312389"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/555312390",
+        "gauge": "1676",
+        "railway": "rail",
+        "service": "yard"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             79.6652826,
             13.0818984
@@ -7340,7 +7953,22 @@
           [
             79.66112,
             13.0845118
-          ],
+          ]
+        ]
+      },
+      "id": "way/555312390"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/555312391",
+        "gauge": "1676",
+        "railway": "rail",
+        "service": "yard"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             79.6650855,
             13.0818705
@@ -7412,7 +8040,22 @@
           [
             79.6611967,
             13.084363
-          ],
+          ]
+        ]
+      },
+      "id": "way/555312391"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/555312393",
+        "gauge": "1676",
+        "railway": "rail",
+        "service": "yard"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             79.6661501,
             13.0818126
@@ -7488,7 +8131,22 @@
           [
             79.6593005,
             13.0836598
-          ],
+          ]
+        ]
+      },
+      "id": "way/555312393"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/555312394",
+        "gauge": "1676",
+        "railway": "rail",
+        "service": "yard"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             79.6613604,
             13.0820664
@@ -7520,7 +8178,22 @@
           [
             79.6594402,
             13.0834437
-          ],
+          ]
+        ]
+      },
+      "id": "way/555312394"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/555312395",
+        "gauge": "1676",
+        "railway": "rail",
+        "service": "yard"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             79.6620396,
             13.081873
@@ -7592,7 +8265,22 @@
           [
             79.6562353,
             13.0835122
-          ],
+          ]
+        ]
+      },
+      "id": "way/555312395"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/555312396",
+        "gauge": "1676",
+        "railway": "rail",
+        "service": "yard"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             79.6618289,
             13.081925
@@ -7624,7 +8312,21 @@
           [
             79.6584571,
             13.0831923
-          ],
+          ]
+        ]
+      },
+      "id": "way/555312396"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/624234096",
+        "railway": "rail",
+        "service": "siding"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             80.2924162,
             13.0820187
@@ -7792,7 +8494,21 @@
           [
             80.3025117,
             13.0920456
-          ],
+          ]
+        ]
+      },
+      "id": "way/624234096"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/624234098",
+        "railway": "rail",
+        "service": "siding"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             80.2975915,
             13.0859884
@@ -7832,7 +8548,21 @@
           [
             80.2952116,
             13.0830789
-          ],
+          ]
+        ]
+      },
+      "id": "way/624234098"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/624234101",
+        "railway": "rail",
+        "service": "siding"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             80.2948798,
             13.0826854
@@ -7884,7 +8614,22 @@
           [
             80.2916448,
             13.0770266
-          ],
+          ]
+        ]
+      },
+      "id": "way/624234101"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/624248200",
+        "name": "Chennai Port Trust",
+        "railway": "rail",
+        "service": "siding"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             80.2907498,
             13.081643
@@ -8012,7 +8757,26 @@
           [
             80.2925002,
             13.0903219
-          ],
+          ]
+        ]
+      },
+      "id": "way/624248200"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/646670200",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "passenger_lines": "2",
+        "railway": "rail",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             77.5954117,
             13.0962596
@@ -8156,7 +8920,27 @@
           [
             77.5871257,
             13.0706268
-          ],
+          ]
+        ]
+      },
+      "id": "way/646670200"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/695668849",
+        "bridge": "yes",
+        "electrified": "no",
+        "gauge": "1000",
+        "layer": "1",
+        "oneway": "no",
+        "passenger_lines": "2",
+        "railway": "rail",
+        "usage": "main"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             100.9425125,
             13.0840163
@@ -8164,7 +8948,25 @@
           [
             100.9425052,
             13.0838741
-          ],
+          ]
+        ]
+      },
+      "id": "way/695668849"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/695668852",
+        "electrified": "no",
+        "gauge": "1000",
+        "oneway": "no",
+        "passenger_lines": "2",
+        "railway": "rail",
+        "usage": "main"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             100.9425052,
             13.0838741
@@ -8176,7 +8978,27 @@
           [
             100.942322,
             13.080151
-          ],
+          ]
+        ]
+      },
+      "id": "way/695668852"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/699466326",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "maxspeed": "100",
+        "passenger_lines": "2",
+        "railway": "rail",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             77.5391448,
             13.0448888
@@ -8656,7 +9478,24 @@
           [
             77.475234,
             13.1056065
-          ],
+          ]
+        ]
+      },
+      "id": "way/699466326"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/719439517",
+        "electrified": "no",
+        "gauge": "1000",
+        "railway": "rail",
+        "service": "spur",
+        "source": "Bing"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             100.8879691,
             13.0567197
@@ -8852,7 +9691,27 @@
           [
             100.8922793,
             13.0911364
-          ],
+          ]
+        ]
+      },
+      "id": "way/719439517"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/800850474",
+        "electrified": "no",
+        "gauge": "1000",
+        "maxspeed": "100",
+        "name": "Đường sắt Bắc–Nam",
+        "passenger_lines": "1",
+        "railway": "rail",
+        "ref": "ĐSBN",
+        "usage": "main"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             109.2600775,
             13.2446569
@@ -9432,7 +10291,25 @@
           [
             109.2998697,
             13.0789462
-          ],
+          ]
+        ]
+      },
+      "id": "way/800850474"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/822593947",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "railway": "rail",
+        "service": "siding",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             80.2745069,
             13.0894343
@@ -9468,7 +10345,25 @@
           [
             80.2750024,
             13.0834439
-          ],
+          ]
+        ]
+      },
+      "id": "way/822593947"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/825938927",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "railway": "rail",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             80.275142,
             13.0875901
@@ -9496,7 +10391,28 @@
           [
             80.2759199,
             13.0830804
-          ],
+          ]
+        ]
+      },
+      "id": "way/825938927"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/911516298",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "name": "Nelamangala-Hassan",
+        "name:kn": "ನೆಲಮಂಗಲ ಹಾಸನ ರೈಲು ಮಾರ್ಗ",
+        "passenger_lines": "1",
+        "railway": "rail",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             77.3520447,
             13.0894549
@@ -9640,7 +10556,21 @@
           [
             77.2652296,
             13.0708038
-          ],
+          ]
+        ]
+      },
+      "id": "way/911516298"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/949140599",
+        "railway": "rail",
+        "service": "spur"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             100.8922362,
             13.0911007
@@ -9684,7 +10614,25 @@
           [
             100.9050262,
             13.0697003
-          ],
+          ]
+        ]
+      },
+      "id": "way/949140599"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/950051244",
+        "electrified": "no",
+        "gauge": "1000",
+        "name": "Phnom Penh - Poipet Railway",
+        "passenger_lines": "1",
+        "railway": "rail",
+        "usage": "main"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             103.1941953,
             13.096301
@@ -9812,7 +10760,28 @@
           [
             103.2022828,
             13.0799674
-          ],
+          ]
+        ]
+      },
+      "id": "way/950051244"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/955662651",
+        "electrified": "no",
+        "gauge": "1000",
+        "name": "สายใต้",
+        "name:en": "Southern Line",
+        "name:th": "สายใต้",
+        "operator": "การรถไฟแห่งประเทศไทย",
+        "railway": "rail",
+        "ref": "ใต้",
+        "usage": "main"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             99.9630412,
             12.9984367
@@ -9912,7 +10881,21 @@
           [
             99.9577636,
             13.0984572
-          ],
+          ]
+        ]
+      },
+      "id": "way/955662651"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/960763210",
+        "railway": "rail",
+        "service": "spur"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             100.8965488,
             13.0788308
@@ -9952,7 +10935,27 @@
           [
             100.8970397,
             13.0830212
-          ],
+          ]
+        ]
+      },
+      "id": "way/960763210"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1106116705",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "maxspeed": "100",
+        "passenger_lines": "2",
+        "railway": "rail",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             77.4965246,
             13.0847368
@@ -10008,7 +11011,26 @@
           [
             77.5058564,
             13.0749263
-          ],
+          ]
+        ]
+      },
+      "id": "way/1106116705"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1119761026",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "passenger_lines": "2",
+        "railway": "rail",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             77.6125716,
             13.0770715
@@ -10064,7 +11086,26 @@
           [
             77.5972897,
             13.0923156
-          ],
+          ]
+        ]
+      },
+      "id": "way/1119761026"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1119761028",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "passenger_lines": "2",
+        "railway": "rail",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             77.6126092,
             13.0771155
@@ -10120,7 +11161,25 @@
           [
             77.597314,
             13.0924118
-          ],
+          ]
+        ]
+      },
+      "id": "way/1119761028"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1288838746",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1676",
+        "railway": "rail",
+        "service": "siding",
+        "voltage": "25000"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
           [
             80.2755269,
             13.0827363
@@ -10130,7 +11189,8 @@
             13.0835056
           ]
         ]
-      }
+      },
+      "id": "way/1288838746"
     }
   ]
 }

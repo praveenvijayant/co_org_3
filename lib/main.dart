@@ -70,41 +70,81 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Railway Caution Viewer')),
-      body: FlutterMap(
-        options: MapOptions(
-          center: _currentPosition ?? LatLng(13.0827, 80.2707), // Chennai Central
-          zoom: 10.0,
+      appBar: AppBar(
+        title: const Text('Railway Caution Viewer'),
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            // Future: open drawer/settings
+          },
         ),
-        children: [
-          TileLayer(
-            urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            subdomains: ['a', 'b', 'c'],
-          ),
-          if (_railwayLine.isNotEmpty)
-            PolylineLayer(
-              polylines: [
-                Polyline(
-                  points: _railwayLine,
-                  strokeWidth: 4.0,
-                  color: Colors.blue,
-                ),
-              ],
-            ),
-          if (_currentPosition != null)
-            MarkerLayer(
-              markers: [
-                Marker(
-                  point: _currentPosition!,
-                  width: 60,
-                  height: 60,
-                  child: const Icon(Icons.location_pin, color: Colors.red, size: 30),
-                ),
-              ],
-            ),
-        ],
       ),
+      body: isLandscape
+          ? Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    color: Colors.grey[200],
+                    child: ListView(
+                      padding: const EdgeInsets.all(8),
+                      children: const [
+                        Text("🚧 Caution Details", style: TextStyle(fontWeight: FontWeight.bold)),
+                        Divider(),
+                        ListTile(
+                          title: Text("KM 353/5 to 354/9"),
+                          subtitle: Text("Speed Limit: 60 kmph\nReason: Track work"),
+                        ),
+                        ListTile(
+                          title: Text("KM 357/0 to 358/3"),
+                          subtitle: Text("Speed Limit: 45 kmph\nReason: Bridge repair"),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: FlutterMap(
+                    options: MapOptions(
+                      center: _currentPosition ?? LatLng(13.0827, 80.2707),
+                      zoom: 10.0,
+                    ),
+                    children: [
+                      TileLayer(
+                        urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                        subdomains: ['a', 'b', 'c'],
+                      ),
+                      if (_railwayLine.isNotEmpty)
+                        PolylineLayer(
+                          polylines: [
+                            Polyline(
+                              points: _railwayLine,
+                              strokeWidth: 4.0,
+                              color: Colors.blue,
+                            ),
+                          ],
+                        ),
+                      if (_currentPosition != null)
+                        MarkerLayer(
+                          markers: [
+                            Marker(
+                              point: _currentPosition!,
+                              width: 60,
+                              height: 60,
+                              child: const Icon(Icons.location_pin, color: Colors.red, size: 30),
+                            ),
+                          ],
+                        ),
+                    ],
+                  ),
+                ),
+              ],
+            )
+          : const Center(child: Text("Please rotate to landscape mode.")),
     );
   }
 }
