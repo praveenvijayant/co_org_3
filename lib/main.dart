@@ -1,4 +1,4 @@
-// main.dart
+// main.dart (Enhanced with Caution Zones, Zoom, Save/Load)
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -6,19 +6,18 @@ import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const RailwayCautionViewerApp());
-}
+void main() => runApp(const RailwayCautionViewerApp());
 
 class RailwayCautionViewerApp extends StatelessWidget {
   const RailwayCautionViewerApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: CautionViewerScreen(),
+      home: const CautionViewerScreen(),
     );
   }
 }
@@ -32,19 +31,17 @@ class CautionViewerScreen extends StatefulWidget {
 
 class _CautionViewerScreenState extends State<CautionViewerScreen> {
   LatLng? _currentPosition;
-  List<Polyline> _railwayPolylines = [];
-  List<LatLng> _allPoints = [];
-  List<double> _railwayKms = [];
+  List<LatLng> _railwayLine = [];
   List<Map<String, dynamic>> _manualCautions = [];
   final MapController _mapController = MapController();
   final Distance _distance = const Distance();
-  double _totalMappedKm = 0.0;
 
   @override
   void initState() {
     super.initState();
     _loadRailwayLine();
     _getCurrentLocation();
+    _loadCautionsFromStorage();
   }
 
   Future<void> _getCurrentLocation() async {
@@ -67,31 +64,28 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
   Future<void> _loadRailwayLine() async {
     final geojson = await rootBundle.loadString('assets/railway_line.geojson');
     final jsonData = json.decode(geojson);
-    final List<Polyline> polylines = [];
-    final List<LatLng> combinedPoints = [];
-
-    for (var feature in jsonData['features']) {
-      if (feature['geometry']['type'] == 'LineString') {
-        final coordinates = feature['geometry']['coordinates'];
-        final segment = coordinates.map<LatLng>((c) => LatLng(c[1], c[0])).toList();
-        combinedPoints.addAll(segment);
-        polylines.add(Polyline(points: segment, strokeWidth: 4.0, color: Colors.blue));
-      }
+    if (jsonData['features'].isNotEmpty) {
+      final coordinates = jsonData['features'][0]['geometry']['coordinates'];
+      setState(() {
+        _railwayLine =
+            coordinates.map<LatLng>((c) => LatLng(c[1], c[0])).toList();
+      });
     }
+  }
 
-    final List<double> kms = [0.0];
-    for (int i = 1; i < combinedPoints.length; i++) {
-      final prev = combinedPoints[i - 1];
-      final curr = combinedPoints[i];
-      kms.add(kms.last + _distance(prev, curr) / 1000.0);
+  Future<void> _saveCautionsToStorage() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('manualCautions', json.encode(_manualCautions));
+  }
+
+  Future<void> _loadCautionsFromStorage() async {
+    final prefs = await SharedPreferences.getInstance();
+    final data = prefs.getString('manualCautions');
+    if (data != null) {
+      setState(() {
+        _manualCautions = List<Map<String, dynamic>>.from(json.decode(data));
+      });
     }
-
-    setState(() {
-      _railwayPolylines = polylines;
-      _allPoints = combinedPoints;
-      _railwayKms = kms;
-      _totalMappedKm = kms.last;
-    });
   }
 
   void _addCaution() {
@@ -99,7 +93,6 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
       context: context,
       isScrollControlled: true,
       builder: (context) {
-        final _formKey = GlobalKey<FormState>();
         final _startController = TextEditingController();
         final _endController = TextEditingController();
         final _speedController = TextEditingController();
@@ -108,52 +101,50 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
         return Padding(
           padding: EdgeInsets.only(
             bottom: MediaQuery.of(context).viewInsets.bottom,
-            left: 16, right: 16, top: 16,
+            left: 16,
+            right: 16,
+            top: 16,
           ),
           child: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TextFormField(
-                    controller: _startController,
-                    decoration: const InputDecoration(labelText: 'Start KM'),
-                    keyboardType: TextInputType.number,
-                  ),
-                  TextFormField(
-                    controller: _endController,
-                    decoration: const InputDecoration(labelText: 'End KM'),
-                    keyboardType: TextInputType.number,
-                  ),
-                  TextFormField(
-                    controller: _speedController,
-                    decoration:
-                        const InputDecoration(labelText: 'Speed Limit (kmph)'),
-                    keyboardType: TextInputType.number,
-                  ),
-                  TextFormField(
-                    controller: _reasonController,
-                    decoration:
-                        const InputDecoration(labelText: 'Reason for Caution'),
-                  ),
-                  const SizedBox(height: 10),
-                  ElevatedButton(
-                    child: const Text('Add Caution'),
-                    onPressed: () {
-                      setState(() {
-                        _manualCautions.add({
-                          'startKm': double.tryParse(_startController.text) ?? 0,
-                          'endKm': double.tryParse(_endController.text) ?? 0,
-                          'speed': _speedController.text,
-                          'reason': _reasonController.text,
-                        });
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  controller: _startController,
+                  decoration: const InputDecoration(labelText: 'Start KM'),
+                  keyboardType: TextInputType.number,
+                ),
+                TextFormField(
+                  controller: _endController,
+                  decoration: const InputDecoration(labelText: 'End KM'),
+                  keyboardType: TextInputType.number,
+                ),
+                TextFormField(
+                  controller: _speedController,
+                  decoration: const InputDecoration(labelText: 'Speed Limit (kmph)'),
+                  keyboardType: TextInputType.number,
+                ),
+                TextFormField(
+                  controller: _reasonController,
+                  decoration: const InputDecoration(labelText: 'Reason'),
+                ),
+                const SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _manualCautions.add({
+                        'startKm': _startController.text,
+                        'endKm': _endController.text,
+                        'speed': _speedController.text,
+                        'reason': _reasonController.text,
                       });
-                      Navigator.pop(context);
-                    },
-                  )
-                ],
-              ),
+                    });
+                    _saveCautionsToStorage();
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Add Caution'),
+                )
+              ],
             ),
           ),
         );
@@ -161,129 +152,121 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
     );
   }
 
-  void _onCautionTap(Map<String, dynamic> caution) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Caution Details"),
-        content: Text(
-          'Start KM: ${caution['startKm']}\n'
-          'End KM: ${caution['endKm']}\n'
-          'Speed Limit: ${caution['speed']} kmph\n'
-          'Reason: ${caution['reason']}\n'
-          'Positioned at ~${caution['startKm']} KM from origin'
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
-          )
-        ],
-      ),
+  Widget _buildCautionList() {
+    return ListView.builder(
+      itemCount: _manualCautions.length,
+      itemBuilder: (context, index) {
+        final c = _manualCautions[index];
+        return ListTile(
+          leading: const Icon(Icons.warning, color: Colors.orange),
+          title: Text('KM ${c['startKm']} to ${c['endKm']}'),
+          subtitle: Text('Speed: ${c['speed']} kmph\n${c['reason']}'),
+          onTap: () {
+            final km = double.tryParse(c['startKm']) ?? 0;
+            if (_railwayLine.isNotEmpty) {
+              final segmentLength = _railwayLine.length;
+              final pos = (km / 734.0 * segmentLength).clamp(0, segmentLength - 1).toInt();
+              _mapController.move(_railwayLine[pos], 16);
+            }
+          },
+        );
+      },
     );
   }
 
-  void _onMapTap(LatLng tapPoint) {
-    double minDist = double.infinity;
-    int closestIndex = 0;
-    for (int i = 0; i < _allPoints.length; i++) {
-      final d = _distance(_allPoints[i], tapPoint);
-      if (d < minDist) {
-        minDist = d;
-        closestIndex = i;
+  List<Polyline> _buildCautionZones() {
+    List<Polyline> zones = [];
+    for (var c in _manualCautions) {
+      final startKm = double.tryParse(c['startKm'] ?? '') ?? 0;
+      final endKm = double.tryParse(c['endKm'] ?? '') ?? 0;
+      final totalLength = _railwayLine.length;
+      final startIndex = (startKm / 734.0 * totalLength).clamp(0, totalLength - 1).toInt();
+      final endIndex = (endKm / 734.0 * totalLength).clamp(0, totalLength - 1).toInt();
+      if (startIndex < endIndex) {
+        zones.add(
+          Polyline(
+            points: _railwayLine.sublist(startIndex, endIndex),
+            strokeWidth: 6.0,
+            color: Colors.red.withOpacity(0.5),
+          ),
+        );
       }
     }
-    double kmFromStart = _railwayKms[closestIndex];
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Track Tapped'),
-        content: Text(
-            'Approximate KM from Chennai Central: ${kmFromStart.toStringAsFixed(2)}'),
-        actions: [
-          TextButton(
-            child: const Text('OK'),
-            onPressed: () => Navigator.pop(ctx),
-          )
-        ],
-      ),
-    );
+    return zones;
   }
 
   @override
   Widget build(BuildContext context) {
+    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Railway Caution Viewer'),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(20),
-          child: Text(
-            'Mapped Distance: ~${_totalMappedKm.toStringAsFixed(2)} KM',
-            style: const TextStyle(color: Colors.white70, fontSize: 12),
-          ),
-        ),
-      ),
-      body: FlutterMap(
-        mapController: _mapController,
-        options: MapOptions(
-          center: _currentPosition ?? const LatLng(13.0827, 80.2707),
-          zoom: 14,
-          onTap: (_, latlng) => _onMapTap(latlng),
-        ),
-        children: [
-          TileLayer(
-            urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            subdomains: ['a', 'b', 'c'],
-          ),
-          PolylineLayer(
-            polylines: _railwayPolylines,
-          ),
-          MarkerLayer(
-            markers: [
-              if (_currentPosition != null)
-                Marker(
-                  width: 60,
-                  height: 60,
-                  point: _currentPosition!,
-                  child: const Icon(
-                    Icons.my_location,
-                    color: Colors.red,
-                    size: 40,
-                  ),
-                ),
-              ..._manualCautions.map((c) {
-                final km = c['startKm'];
-                int closestIndex = 0;
-                double minDist = double.infinity;
-                for (int i = 0; i < _railwayKms.length; i++) {
-                  final diff = (_railwayKms[i] - km).abs();
-                  if (diff < minDist) {
-                    minDist = diff;
-                    closestIndex = i;
-                  }
-                }
-                return Marker(
-                  width: 40,
-                  height: 40,
-                  point: _allPoints[closestIndex],
-                  child: GestureDetector(
-                    onTap: () => _onCautionTap(c),
-                    child: const Icon(
-                      Icons.warning,
-                      color: Colors.orange,
-                      size: 30,
-                    ),
-                  ),
-                );
-              }).toList(),
-            ],
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: _addCaution,
+            tooltip: 'Add Caution',
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _addCaution,
-        child: const Icon(Icons.add),
-      ),
+      body: isLandscape
+          ? Row(
+              children: [
+                Flexible(
+                  flex: 1,
+                  child: Container(
+                    color: Colors.grey[100],
+                    child: _buildCautionList(),
+                  ),
+                ),
+                Flexible(
+                  flex: 2,
+                  child: FlutterMap(
+                    mapController: _mapController,
+                    options: MapOptions(
+                      center: _currentPosition ?? const LatLng(13.0827, 80.2707),
+                      zoom: 14,
+                    ),
+                    children: [
+                      TileLayer(
+                        urlTemplate:
+                            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                        subdomains: ['a', 'b', 'c'],
+                      ),
+                      PolylineLayer(
+                        polylines: [
+                          Polyline(
+                            points: _railwayLine,
+                            strokeWidth: 4.0,
+                            color: Colors.blue,
+                          ),
+                          ..._buildCautionZones(),
+                        ],
+                      ),
+                      MarkerLayer(
+                        markers: [
+                          if (_currentPosition != null)
+                            Marker(
+                              width: 60,
+                              height: 60,
+                              point: _currentPosition!,
+                              child: const Icon(
+                                Icons.my_location,
+                                color: Colors.red,
+                                size: 40,
+                              ),
+                            ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            )
+          : const Center(
+              child: Text('Please rotate your device to landscape mode.'),
+            ),
     );
   }
 }
