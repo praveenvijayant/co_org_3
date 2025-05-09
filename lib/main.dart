@@ -32,19 +32,21 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
   LatLng? _currentPosition;
   List<LatLng> _railwayLine = [];
 
-  // List of manual cautions
-  List<Map<String, String>> _cautionList = [
+  // Sample caution list with LatLng demo locations
+  List<Map<String, dynamic>> _cautionList = [
     {
-      'startKM': '353/5',
-      'endKM': '354/9',
+      'startKM': '5/0',
+      'endKM': '5/5',
       'speed': '60',
       'reason': 'Track work',
+      'latLng': LatLng(13.0750, 80.2100),
     },
     {
-      'startKM': '357/0',
-      'endKM': '358/3',
+      'startKM': '12/0',
+      'endKM': '12/3',
       'speed': '45',
       'reason': 'Bridge repair',
+      'latLng': LatLng(13.0350, 80.1200),
     },
   ];
 
@@ -118,6 +120,7 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
                   'endKM': endKMController.text,
                   'speed': speedController.text,
                   'reason': reasonController.text,
+                  'latLng': _currentPosition ?? LatLng(13.0827, 80.2707), // fallback location
                 });
               });
               Navigator.pop(context);
@@ -136,11 +139,30 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Railway Caution Viewer'),
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            // Add drawer/settings logic here
-          },
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(color: Colors.blue),
+              child: Text('Menu', style: TextStyle(color: Colors.white, fontSize: 24)),
+            ),
+            ListTile(
+              leading: const Icon(Icons.sync),
+              title: const Text('Sync Firebase'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('Settings'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
         ),
       ),
       body: isLandscape
@@ -197,6 +219,17 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
                             ),
                           ],
                         ),
+                      // Caution markers
+                      MarkerLayer(
+                        markers: _cautionList.map((caution) {
+                          return Marker(
+                            point: caution['latLng'],
+                            width: 40,
+                            height: 40,
+                            child: const Icon(Icons.warning, color: Colors.orange, size: 30),
+                          );
+                        }).toList(),
+                      ),
                     ],
                   ),
                 ),
@@ -204,7 +237,6 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
             )
           : const Center(child: Text("Please rotate to landscape mode.")),
 
-      // FAB for manual caution entry
       floatingActionButton: isLandscape
           ? FloatingActionButton(
               onPressed: _showAddCautionDialog,
