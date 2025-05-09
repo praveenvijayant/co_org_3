@@ -1,16 +1,14 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
-    // ✅ Add Google Services plugin
-    id("com.google.gms.google-services")
+    id("com.google.gms.google-services") // ✅ Firebase plugin
 }
 
 android {
     namespace = "com.example.railway_caution_viewer"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = "27.0.12077973" // ✅ OK
+    ndkVersion = "27.0.12077973"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -23,16 +21,23 @@ android {
 
     defaultConfig {
         applicationId = "com.example.railway_caution_viewer"
-        minSdk = 21 // ✅ Firebase requires minimum SDK 21
+        minSdk = 21 // ✅ Minimum required for Firebase
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
 
     buildTypes {
+        debug {
+            // ✅ Safe Kotlin DSL signing config
+            signingConfig = signingConfigs.getByName("debug")
+        }
         release {
-            // Use debug signingConfig just for testing — replace for production!
-            signingConfig = signingConfigs.debug
+            // 🔧 Optional: add release signing later
+            // signingConfig = signingConfigs.getByName("release")
+            // minifyEnabled = false
+            // shrinkResources = false
+            // proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
 }
