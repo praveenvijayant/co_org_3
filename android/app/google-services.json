@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "43444362686",
+    "project_id": "railway-caution-viewer",
+    "storage_bucket": "railway-caution-viewer.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43444362686:android:04f330470eff7e81302def",
+        "android_client_info": {
+          "package_name": "com.example.railway_caution_viewer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkK_obNJDBH8WtwCffwIaYIqK2xHSusMc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
