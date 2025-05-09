@@ -32,6 +32,22 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
   LatLng? _currentPosition;
   List<LatLng> _railwayLine = [];
 
+  // List of manual cautions
+  List<Map<String, String>> _cautionList = [
+    {
+      'startKM': '353/5',
+      'endKM': '354/9',
+      'speed': '60',
+      'reason': 'Track work',
+    },
+    {
+      'startKM': '357/0',
+      'endKM': '358/3',
+      'speed': '45',
+      'reason': 'Bridge repair',
+    },
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -68,6 +84,51 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
     }
   }
 
+  void _showAddCautionDialog() {
+    final startKMController = TextEditingController();
+    final endKMController = TextEditingController();
+    final speedController = TextEditingController();
+    final reasonController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text("Add Caution"),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(controller: startKMController, decoration: const InputDecoration(labelText: 'Start KM')),
+            TextField(controller: endKMController, decoration: const InputDecoration(labelText: 'End KM')),
+            TextField(controller: speedController, decoration: const InputDecoration(labelText: 'Speed Limit')),
+            TextField(controller: reasonController, decoration: const InputDecoration(labelText: 'Reason')),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text("Cancel"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                _cautionList.add({
+                  'startKM': startKMController.text,
+                  'endKM': endKMController.text,
+                  'speed': speedController.text,
+                  'reason': reasonController.text,
+                });
+              });
+              Navigator.pop(context);
+            },
+            child: const Text("Add"),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
@@ -78,7 +139,7 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
         leading: IconButton(
           icon: const Icon(Icons.menu),
           onPressed: () {
-            // Future: open drawer/settings
+            // Add drawer/settings logic here
           },
         ),
       ),
@@ -91,17 +152,14 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
                     color: Colors.grey[200],
                     child: ListView(
                       padding: const EdgeInsets.all(8),
-                      children: const [
-                        Text("🚧 Caution Details", style: TextStyle(fontWeight: FontWeight.bold)),
-                        Divider(),
-                        ListTile(
-                          title: Text("KM 353/5 to 354/9"),
-                          subtitle: Text("Speed Limit: 60 kmph\nReason: Track work"),
-                        ),
-                        ListTile(
-                          title: Text("KM 357/0 to 358/3"),
-                          subtitle: Text("Speed Limit: 45 kmph\nReason: Bridge repair"),
-                        ),
+                      children: [
+                        const Text("🚧 Caution Details", style: TextStyle(fontWeight: FontWeight.bold)),
+                        const Divider(),
+                        for (var caution in _cautionList)
+                          ListTile(
+                            title: Text("KM ${caution['startKM']} to ${caution['endKM']}"),
+                            subtitle: Text("Speed Limit: ${caution['speed']} kmph\nReason: ${caution['reason']}"),
+                          ),
                       ],
                     ),
                   ),
@@ -145,6 +203,15 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
               ],
             )
           : const Center(child: Text("Please rotate to landscape mode.")),
+
+      // FAB for manual caution entry
+      floatingActionButton: isLandscape
+          ? FloatingActionButton(
+              onPressed: _showAddCautionDialog,
+              child: const Icon(Icons.add),
+              tooltip: 'Add Caution',
+            )
+          : null,
     );
   }
 }
