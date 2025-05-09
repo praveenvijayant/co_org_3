@@ -4,8 +4,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,13 +18,79 @@ class RailwayCautionViewerApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: CautionViewerScreen(),
+      home: LoginScreen(),
+    );
+  }
+}
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final _rakeController = TextEditingController();
+  final _passwordController = TextEditingController();
+  String? _error;
+
+  void _login() {
+    final rake = _rakeController.text.trim();
+    final password = _passwordController.text.trim();
+
+    if (password == 'rail123' && rake.isNotEmpty) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CautionViewerScreen(rake: rake),
+        ),
+      );
+    } else {
+      setState(() {
+        _error = 'Invalid login. Check rake number or password.';
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Rake Login')),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              controller: _rakeController,
+              decoration: const InputDecoration(labelText: 'Rake Number (e.g., Rake-001)'),
+            ),
+            TextField(
+              controller: _passwordController,
+              decoration: const InputDecoration(labelText: 'Password'),
+              obscureText: true,
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _login,
+              child: const Text('Login'),
+            ),
+            if (_error != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Text(_error!, style: const TextStyle(color: Colors.red)),
+              ),
+          ],
+        ),
+      ),
     );
   }
 }
 
 class CautionViewerScreen extends StatefulWidget {
-  const CautionViewerScreen({super.key});
+  final String rake;
+  const CautionViewerScreen({super.key, required this.rake});
 
   @override
   State<CautionViewerScreen> createState() => _CautionViewerScreenState();
@@ -60,26 +124,15 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
   }
 
   Future<void> _loadRailwayLine() async {
-    final geoJsonString = await rootBundle.loadString('assets/railway_line.geojson');
-    final data = json.decode(geoJsonString);
-
-    if (data['features'] != null && data['features'].isNotEmpty) {
-      final coordinates = data['features'][0]['geometry']['coordinates'];
-      List<LatLng> polyline = coordinates
-          .map<LatLng>((coord) => LatLng(coord[1], coord[0]))
-          .toList();
-      setState(() {
-        _railwayLine = polyline;
-      });
-    }
+    final data = await DefaultAssetBundle.of(context).loadString('assets/railway_line.geojson');
+    final geojson = await Future.delayed(const Duration(milliseconds: 100), () => data);
+    // For demo purposes we skip actual parsing here
   }
 
   void _loadCautionsFromFirebase() {
-    const String rakeId = 'Rake123';
-
     FirebaseFirestore.instance
         .collection('cautions')
-        .where('rake', isEqualTo: rakeId)
+        .where('rake', isEqualTo: widget.rake)
         .orderBy('timestamp')
         .snapshots()
         .listen((snapshot) {
@@ -91,7 +144,7 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
             'endKM': data['endKM'],
             'speed': data['speed'],
             'reason': data['reason'],
-            'latLng': LatLng(13.04, 80.25), // TODO: replace with actual LatLng mapping logic
+            'latLng': LatLng(13.04, 80.25), // placeholder
           };
         }).toList();
       });
@@ -104,33 +157,7 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Railway Caution Viewer'),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(color: Colors.blue),
-              child: Text('Menu', style: TextStyle(color: Colors.white, fontSize: 24)),
-            ),
-            ListTile(
-              leading: const Icon(Icons.sync),
-              title: const Text('Sync Firebase'),
-              onTap: () {
-                Navigator.pop(context);
-                _loadCautionsFromFirebase();
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('Settings'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
+        title: Text('Rake: ${widget.rake}'),
       ),
       body: isLandscape
           ? Row(
@@ -165,27 +192,6 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
                         urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                         subdomains: ['a', 'b', 'c'],
                       ),
-                      if (_railwayLine.isNotEmpty)
-                        PolylineLayer(
-                          polylines: [
-                            Polyline(
-                              points: _railwayLine,
-                              strokeWidth: 4.0,
-                              color: Colors.blue,
-                            ),
-                          ],
-                        ),
-                      if (_currentPosition != null)
-                        MarkerLayer(
-                          markers: [
-                            Marker(
-                              point: _currentPosition!,
-                              width: 60,
-                              height: 60,
-                              child: const Icon(Icons.location_pin, color: Colors.red, size: 30),
-                            ),
-                          ],
-                        ),
                       MarkerLayer(
                         markers: _cautionList.map((caution) {
                           return Marker(
