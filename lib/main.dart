@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const RailwayCautionViewerApp());
 }
 
@@ -31,30 +35,14 @@ class CautionViewerScreen extends StatefulWidget {
 class _CautionViewerScreenState extends State<CautionViewerScreen> {
   LatLng? _currentPosition;
   List<LatLng> _railwayLine = [];
-
-  // Sample caution list with LatLng demo locations
-  List<Map<String, dynamic>> _cautionList = [
-    {
-      'startKM': '5/0',
-      'endKM': '5/5',
-      'speed': '60',
-      'reason': 'Track work',
-      'latLng': LatLng(13.0750, 80.2100),
-    },
-    {
-      'startKM': '12/0',
-      'endKM': '12/3',
-      'speed': '45',
-      'reason': 'Bridge repair',
-      'latLng': LatLng(13.0350, 80.1200),
-    },
-  ];
+  List<Map<String, dynamic>> _cautionList = [];
 
   @override
   void initState() {
     super.initState();
     _loadRailwayLine();
     _getCurrentLocation();
+    _loadCautionsFromFirebase();
   }
 
   Future<void> _getCurrentLocation() async {
@@ -86,50 +74,28 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
     }
   }
 
-  void _showAddCautionDialog() {
-    final startKMController = TextEditingController();
-    final endKMController = TextEditingController();
-    final speedController = TextEditingController();
-    final reasonController = TextEditingController();
+  void _loadCautionsFromFirebase() {
+    const String rakeId = 'Rake123';
 
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: const Text("Add Caution"),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(controller: startKMController, decoration: const InputDecoration(labelText: 'Start KM')),
-            TextField(controller: endKMController, decoration: const InputDecoration(labelText: 'End KM')),
-            TextField(controller: speedController, decoration: const InputDecoration(labelText: 'Speed Limit')),
-            TextField(controller: reasonController, decoration: const InputDecoration(labelText: 'Reason')),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text("Cancel"),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              setState(() {
-                _cautionList.add({
-                  'startKM': startKMController.text,
-                  'endKM': endKMController.text,
-                  'speed': speedController.text,
-                  'reason': reasonController.text,
-                  'latLng': _currentPosition ?? LatLng(13.0827, 80.2707), // fallback location
-                });
-              });
-              Navigator.pop(context);
-            },
-            child: const Text("Add"),
-          ),
-        ],
-      ),
-    );
+    FirebaseFirestore.instance
+        .collection('cautions')
+        .where('rake', isEqualTo: rakeId)
+        .orderBy('timestamp')
+        .snapshots()
+        .listen((snapshot) {
+      setState(() {
+        _cautionList = snapshot.docs.map((doc) {
+          final data = doc.data();
+          return {
+            'startKM': data['startKM'],
+            'endKM': data['endKM'],
+            'speed': data['speed'],
+            'reason': data['reason'],
+            'latLng': LatLng(13.04, 80.25), // TODO: replace with actual LatLng mapping logic
+          };
+        }).toList();
+      });
+    });
   }
 
   @override
@@ -153,6 +119,7 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
               title: const Text('Sync Firebase'),
               onTap: () {
                 Navigator.pop(context);
+                _loadCautionsFromFirebase();
               },
             ),
             ListTile(
@@ -219,7 +186,6 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
                             ),
                           ],
                         ),
-                      // Caution markers
                       MarkerLayer(
                         markers: _cautionList.map((caution) {
                           return Marker(
@@ -236,14 +202,6 @@ class _CautionViewerScreenState extends State<CautionViewerScreen> {
               ],
             )
           : const Center(child: Text("Please rotate to landscape mode.")),
-
-      floatingActionButton: isLandscape
-          ? FloatingActionButton(
-              onPressed: _showAddCautionDialog,
-              child: const Icon(Icons.add),
-              tooltip: 'Add Caution',
-            )
-          : null,
     );
   }
 }
