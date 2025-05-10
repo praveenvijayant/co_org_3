@@ -1,0 +1,11 @@
+workflows:
+  flutter-debug-build:
+    name: Flutter Debug Build
+    max_build_duration: 60
+    environment:
+      flutter: stable
+    scripts:
+      - name: Build debug APK
+        script: flutter build apk --debug
+    artifacts:
+      - build/app/outputs/flutter-apk/app-debug.apk
